@@ -1,0 +1,176 @@
+[
+{
+	"uri": "/8-cluster-asg/8.1-create-cluster/",
+	"title": "Cập nhật Cluster",
+	"tags": [],
+	"description": "",
+	"content": "Cập nhật Cluster Ở phần này chúng ta sẽ tiến hành cập nhập security groups cho các instance chạy trong Auto Scaling Group của cluster. Các bước thực hiện như sau:\nTruy cập vào cluster của bạn, sau đó chọn tab Infrastructure Sẽ có thông tin của Auto Scaling Group và 2 EC2 Instance được khởi chạy bởi ASG Truy cập vào EC2, sau đó chọn Launch Templetes Chọn Templete của ASG, sau đó chọn Modify templete Ở phần Network settings, chọn thêm 2 sercurity groups: ecs_port_container_sg và default, sau đó nhấn Create templete version để cập nhật Truy cập vào ASG của cluster, kéo tới phần Lauch templete, chọn Edit Tiến hành chọn lại version mới nhất vừa được cập nhật, sau đó lưu lại "
+},
+{
+	"uri": "/",
+	"title": "ECS ECR Workshop",
+	"tags": [],
+	"description": "",
+	"content": "Làm việc với ECS - ECR Tổng quan Trong bài lab này, bạn sẽ tìm hiểu các khái niệm cơ bản và thực hành về ECS - ECR. Thực hành tạo các services chạy task trong các private subnets và gắn load balancing cho ECS.\nNội dung Giới thiệu Các bước chuẩn bị Build và push image lên ECR Tạo Cluster và Task definition Tạo ALB và target groups Tạo Services và kiểm tra Services auto scaling Cluster auto scaling Dọn dẹp tài nguyên "
+},
+{
+	"uri": "/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "Amazon Elastic Container Service (ECS) Amazon Elastic Container Service (Amazon ECS), theo định nghĩa của AWS là một dịch vụ quản lý container có khả năng mở rộng cao, dễ dàng run, stop, hay quản lý docker container ở trong một cluster. Bạn có thể host một serverless infrastructure bằng cách chạy service hay task sử dụng Fargate launch type hoặc sử dụng EC2 launch type để chạy các EC2 instance. ECS chạy các container trong cluster dựa trên các EC2 được cài sẵn Docker. Bạn có thể dễ dàng quản lý các container của mình thông qua Cluster. ECS là một dịch vụ chạy theo region, và nó hoạt động trong VPC. Sau khi một cluster được khởi tạo và chạy, bạn có thể định nghĩa các task và services mà nó chỉ định Docker container image sẽ chạy thông qua clusters. ECS có hai dạng được triển khai là chạy trên các EC2 và serverless(fargate).\nCác thành phần khác Task definition Task definition là một bản thiết kế cho ứng dụng của bạn. Nó sẽ định nghĩa image nào được chạy trong container, giới hạn sử dụng CPU và bộ nhớ cho mỗi container được chạy. Lựa chọn các mode networking của Docker có trên AWS ECS và port.\nTask Mỗi một Task tương ứng với mỗi bản Task definition được chạy trên cluster. Nhiều task có thể được chạy bởi cùng một Task definition. Với mỗi một task sử dụng Fargate launch type có một ranh giới riêng biệt và không chia sẻ kernel, tài nguyên cpu, bộ nhớ, hay elastic network interface với task khác.\nService Xác định mức tối thiểu và tối đa của một hoặc nhiều Task từ một Task Definition chạy tại bất kỳ thời điểm nhất định nào. Đây là tính năng scale và cân bằng tải. Service còn quy định việc các task được chạy ở đâu ở các subnets.\n"
+},
+{
+	"uri": "/2-prerequiste/2.1-create-vpc/",
+	"title": "Khởi Tạo VPC",
+	"tags": [],
+	"description": "",
+	"content": "KHỞI TẠO AWS VPC với CloudFormation Template Trong phần này chúng ta sẽ khởi tạo VPC thông qua Cloud Formation bằng cái tải lên file yml đã cấu hình sẵn theo link sau.\nTruy cập đến CloudFormation Management Console bằng cách gõ CloudFormation vào thanh tìm kiếm Trong giao diện của CloudFormation Nhấn chọn Create Stack Nhấn chọn With new resources (standard) Trong giao diện Create Stack Ở phần Prepare templete, nhấn chọn Templete is ready Ở phần Templete source, chọn Upload a templete file Nhấn vào Choose file để tải lên file đã tải về theo link ở trên Trong phần Specify stack details Điền tên stack vào Stack name. Ví dụ ECS. Điền tên của VPC vào phần Environment Name. Ví dụ ecs Nhấn Next để tiếp tục. Trong phần Configure stack options Nhấn Next để tiếp tục Trong phần Review Xem lại và kiểm tra các thông số và nhấn Submit để tiến hành khởi tạo VPC Sau khi chờ khoản 5 phút thì status của stack sẽ chuyển sang thành công. Truy cập đến VPC console bằng cách gõ VPC vào ô tìm kiếm và chọn VPC ở bên dưới. Dưới đây là thông tin VPC bạn vừa mới tạo "
+},
+{
+	"uri": "/6-create-services/6.1-create-services/",
+	"title": "Tạo các services",
+	"tags": [],
+	"description": "",
+	"content": "Tạo các services Truy cập vào cluster được tạo ở bước 4.1 sau đó nhấn chọn Create ở tab Services Ở cửa sổ create Environment Compute options, chọn Launch type Launch type, chọn fargate. Platform version chọn LASTEST Deployment configuration Application type, chọn service Family, chọn task definition đã tạo ở bước 4.2, ở đây là ecs_cluster_td. Revision chọn latest Điền tên service vào service name, ví dụ ecs-services Desired tasks. Đây là số lượng task mà bạn muốn chạy, ở đây mình sẽ chọn 2 tương ứng với 2 container. Do trong task definition mình chỉ start 1 container. Networking VPC, chọn ecs Subnets, chọn 2 private subnets Security groups, chọn use an existing security group. Chọn 2 security groups: default và ecs_port_container_sg Tắt Public IP, vì container sẽ chạy trong private subnets. Tắt Public IP để tránh lãng phí tài nguyên Load balancing Load balancer type, chọn Application Load Balancer Chọn use an existing load balancer, chọn load balancer đã tạo ở bước 5.2, ở đây là ecs-cluster-alb Choose container to load balancer, mặc định là ecs-image 8080:8080 Target group, chọn use an existing target group, chọn target group tạo ở bước 5.1, ở đây là ecs-container-tg Nhấn Create để tạo Service "
+},
+{
+	"uri": "/4-create-cluster-and-task-definition/4.1-create-cluster/",
+	"title": "Tạo Cluster",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Cluster Nhập ECS vào thanh tìm kiếm và nhấn chọn Elastic Container Service Ở cửa sổ console của ECS nhấn chọn Create Cluster để tiến hành tạo Cluster Ở cửa sổ Create Cluster chúng ta sẽ cấu hình cluster theo các bước sau\nĐiền tên cluster vào Cluster name, ví dụ ecs_cluster Ở phần Networking chọn VPC là ecs, chọn các subnets là private subnets Ở phần Infrastructure, chúng ta sẽ cấu hình Auto Scaling Group để tự động tạo ra các EC2 instances và gắn vào Cluster. Các bước cấu hình như sau Chọn Amazon EC2 Intances Chọn Create new ASG Operating System: Amazon Linux 2 Chọn t2.micro ở phần EC2 instance type Desired capacity: Minmum là 2, Maximum là 5 SSH Keypair Chọn None Nhấn chọn Create để tiến hành tạo cluster. Việc chọn các subnet là private subnets là để đảm bảo các container của cluster sẽ chỉ chạy được trong nội bộ vpc, nhằm tăng tính bảo mật cho ứng dụng. Khi tạo Cluster với Auto Scaling Group với cấu hình như trên, thì sẽ có 2 EC2 instances được khởi chạy và gắng vào Cluster.\n"
+},
+{
+	"uri": "/7-service-asg/7.1-create-svc/",
+	"title": "Tạo service",
+	"tags": [],
+	"description": "",
+	"content": "Tạo service Environment Compute options, chọn Launch type Launch type, chọn fargate. Platform version chọn LASTEST Deployment configuration Application type, chọn service Family, chọn task definition đã tạo ở bước 4.2, ở đây là nest_app_td. Revision chọn latest Điền tên service vào service name, ví dụ ecs_services_asg Desired tasks. Đây là số lượng task mà bạn muốn chạy, ở đây mình sẽ chọn 2 tương ứng với 2 container. Do trong task definition mình chỉ start 1 container. Networking VPC, chọn ecs_vpc Subnets, chọn 2 private subnets Security groups, chọn use an existing security group. Chọn 2 security groups: default và ecs_port_container_sg Tắt Public IP, vì container sẽ chạy trong private subnets. Tắt Public IP để tránh lãng phí tài nguyên Load balancing Load balancer type, chọn Application Load Balancer Chọn use an existing load balancer, chọn load balancer đã tạo ở bước 5.2, ở đây là ecs-cluster-alb Choose container to load balancer, mặc định là ecs-image 8080:8080 Target group, chọn use an existing target group, chọn target group tạo ở bước 5.1, ở đây là ecs-container-tg Service auto scaling Chọn enable service auto scaling để tạo auto scaling cho service Minimum number of tasks, chọn 2. Đây là số lượng task tối thiểu mà service sẽ chạy (1 task = 1 container) Maximum number of tasks, chọn 4. Đây là số lượng task tối đa mà service sẽ chạy (1 task = 1 container) Scaling policy type, chọn Target tracking Policy name, điền tên policy, ví dụ alb_request_tracking ECS service metric, chọn ALBRequestCountPerTarget Target value, điền 500 Scale-out cooldown period, điền 30. Thời gian cooldown sau khi scale-out, khóa không cho scale-out trong thời gian này Scale-in cooldown period, điền 300. Thời gian cooldown sau khi scale-in, khóa không cho scale-in trong thời gian này Nhấn Create để tạo Service "
+},
+{
+	"uri": "/5-create-alb-and-target-groups/5.1-create-target-groups/",
+	"title": "Tạo Target groups",
+	"tags": [],
+	"description": "",
+	"content": "Create Target groups GÕ vào thanh tìm kiếm EC2, sau đó chọn EC2 Ở cửa sổ console của EC2\nỞ menu, tìm tới phần Load Balancing, chọn Target Groups Chọn Create target groups Ở cửa sổ Create target group\nỞ phần Basic Configuration\nChọn IP addresses Điền target group name, ví dụ ecs-container-tg Chọn protocol HTTP, Port 80 IP address type, chọn IPv4 Chọn VPC là ecs, Protocol version chọn HTTP1 Trong phần Advanced health check settings, chọn theo như hình bên dưới, mục đính làm giảm thời gian chờ đợi healcheck thành công. Healthy threshold có nghĩa là số lần healthy liên tiếp để được đánh healthy Unhealthy threshold có nghĩa là số lần unhealthy liên tiếp để được đánh unhealthy Interval là khoảng thời gian giữa 2 lần healcheck Timeout là thời gian tối đa để chờ healcheck thành công Success codes là mã trả về khi healcheck thành công Nhấn Next để sang bước tiếp theo\nỞ phần Register targets\nĐể mọi thứ mặc định, kiểm tra lại VPC và nhấn Create target group để tạo group "
+},
+{
+	"uri": "/2-prerequiste/",
+	"title": "Các bước chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "\rChúng ta sẽ khởi tạo 1 VPC với 2 public subnets, 2 private subnets, 1 internet gateway, default route cho các public subnets. 2 NAT gateway cho các private subnets. NAT gateway sẽ tốn phí nên cần xóa khi không sử dụng nữa.\nĐể tìm hiểu cách tạo VPC với public/private subnet các bạn có thể tham khảo bài lab :\nLàm việc với Amazon VPC Ở phần này chúng ta sẽ khởi tạo môi trường mạng để cho các service trong cluster cũng như load balancer được hoạt động. Dưới đây là kết quả sau khi tạo VPC và nơi các ECS được hoạt động. Nội dung Chuẩn bị VPC Tạo thêm các security groups "
+},
+{
+	"uri": "/6-create-services/6.2-testing/",
+	"title": "Kiểm tra",
+	"tags": [],
+	"description": "",
+	"content": "Kiểm tra Truy cập vào Application Load Balancer đã tạo ở bước 5.2, lấy địa chỉ DNS và dáng vào browser. Thông tin ứng dụng sẽ được trả về, phần containerIp tương ứng với private Ip của các task chạy trong VPC. "
+},
+{
+	"uri": "/7-service-asg/7.2-load-test/",
+	"title": "Kiểm tra",
+	"tags": [],
+	"description": "",
+	"content": "Kiểm tra Tải apache benchmark về máy sudo apt-get install apache2-utils Ping request đến ALB ab -n 100000 -c 200 \u0026lt;dns-name\u0026gt; Kết quả Vào CloudWatch, nhấn chọn All Alarm, bạn sẽ thấy alarm của service ở trạng thái In Alarm Chờ thêm vài phút các task sẽ được tăng lên 4 Đây là event log của deployment "
+},
+{
+	"uri": "/5-create-alb-and-target-groups/5.2-create-alb/",
+	"title": "Tạo Application Load Balancer",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Application Load Balancer Chọn Load Balancer ở phần Load Balancing Nhấn chọn Create load balancer Nhấn Create ở phần Application Load Balancer Ở trang Create Applicatioin Load Balancer\nPhần Basic Configuration\nĐiền tên vào Load balancer name, ví dụ ecs-cluster-alb Scheme, chọn Internet-facing IP address type, chọn IPv4 Phần Networking, VPC chọn ecs, chọn tiếp 2 public subnets Phần Security groups, chọn ecs-public-port-sg Phần Listeners and routing, Protocol là HTTP, Port là 80, default action chọn ecs-container-tg Review lại và nhấn Create load balancer để tiến hành tạo load balancer. "
+},
+{
+	"uri": "/2-prerequiste/2.2-create-security-group/",
+	"title": "Tạo Security groups",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Security groups Ở phần này chúng ta sẽ cấu hình thêm security groups cho VPC mới tạo. Một cái dùng để public port cho Application Load Balancer và mở port cho ALB kết nối tới port của các container chạy trong private subnets.\nTrong cửa sổ của VPC. Nhấn chọn Security groups trong phần Security để chuyển tới màn hình security. Trong của sổ Security groups Nhấn chọn Create Sercurity group Trong cửa sổ Create security group Điền tên cho Security group, ví dụ ecs_public_port_sg Điền Description, ví dụ ecs_public_port_sg Lựa chọn VPC, chọn VPC vừa mới tạo, ở đây là ecs Trong phần Inbound rules, chọn Type là HTTP, Source là Anywhere. Nhấn chọn Create security group để tiến hành tạo security group cho Load Balancer. Quay lại cửa sổ Create security group để tạo security group cho container. Điền tên cho Security group, ví dụ ecs_port_container_sg Điền Description, ví dụ ecs_port_container_sg Lựa chọn VPC, chọn VPC vừa mới tạo, ở đây là ecs Trong phần Inbound rules, chọn Type là Custom TCP,Port range là 8080, Source là Security group vừa tạo. Nhấn chọn Create security group để tiến hành tạo security group cho container. "
+},
+{
+	"uri": "/8-cluster-asg/8.2-create-service/",
+	"title": "Tạo service",
+	"tags": [],
+	"description": "",
+	"content": "Tạo service Ở phần Environment, Chọn Capacity Provider strategy, sau đó chọn use cluster default Ở phần Deployment configuration Chọn Application type là service Chọn Task definition là nest_app_td Điền Service name là svc-cluster-asg Desired tasks là 2 Ở phần Networking Chọn VPC là ecs_vpc Chọn Subnets là 2 private subnets Chọn Security groups là use an existing security group, chọn 2 security groups: default và ecs_port_container_sg Tắt Public IP Ở phần Load balancing Load balancer type, chọn Application Load Balancer Chọn use an existing load balancer, chọn load balancer đã tạo ở bước 5.2, ở đây là ecs-alb Choose container to load balancer, mặc định là ecs-container 8080:8080 Target group, chọn use an existing target group, chọn target group tạo ở bước 5.1, ở đây là nest-app-tg Health check grace period, chọn 20 Service auto scaling Chọn enable service auto scaling để tạo auto scaling cho service Minimum number of tasks, chọn 2 Maximum number of tasks, chọn 4 Scaling policy type, chọn Target tracking Policy name, điền tên policy, ví dụ alb_request_tracking ECS service metric, chọn ALBRequestCountPerTarget Target value, điền 500 Scale-out cooldown period, điền 30 Scale-in cooldown period, điền 300 Nhấn Create để tạo service "
+},
+{
+	"uri": "/4-create-cluster-and-task-definition/4.2-create-task-definition/",
+	"title": "Tạo Task Definition",
+	"tags": [],
+	"description": "",
+	"content": "Create Task Definition Ở cửa sổ của ECS nhấn chọn Task definitions bên thanh menu Ở cửa sổ của Task definition, nhấn chọn Create new task definition, chọn option thứ nhất Ở phần configure task definition and container Điền tên của task definition vào Task definition family, ví dụ ecs_cluster_td Ở phần Container, điền tên cho container tại Name, copy URI image đã push lên ECR ở bước 3 vào Image URI Container port, nhập vào 8080, Protocol là TCP Nhấn Next để sang bước tiếp theo Ở phần configure environment, storage, monitoring, and tags App environment nhấn chọn AWS serverless Task size nhấn chọn .25vCPU, .5GB Memory để tiết kiệm chi phí Task execution role, chọn ecsTaskExecutionRole Nhấn Next để sang bước tiếp theo Ở phần Review and create Kiểm tra lại thông tin và nhấn Create để tạo Task definition Dưới đây là kết quả "
+},
+{
+	"uri": "/3-push-image-to-ecr/",
+	"title": "Build và Push image lên ECR",
+	"tags": [],
+	"description": "",
+	"content": "Build và Push image lên Elastic Container Registry Trong phần này bạn sẽ clone repository từ github theo link sau. Sau đó sử dụng docker và aws cli để build và push image lên Elastic Container Registry (ECR).\nNhập ECR vào thanh tìm kiếm sau đó chọn Elastic Container Registry Ở cửa sổ ECR nhấn vào Get Started để tạo Repository Ở cửa sổ Create Repository Ở phần Visibility Settings chọn Private Nhập tên của repository vào phần Repository name, Ví dụ ecs-image. Nhấn vào Create Repository để tạo Repo Để tiếp tục ở các bước tiếp theo các bạn cần phải cài đặt git, docker engine, và setup aws cli ở máy tính của mình trước.\nMở cửa sổ terminal ở máy tính của bạn. Clone repository mà mình đã tạo sẵn trên github, git clone https://github.com/huy1010/nest-app-example.git Cd vào thư mục của repository, cd nest-app-example Truy cập vào repository vừa tạo trên ECR Nhấn chọn View push commands để xem các câu lệnh cmd dùng để push image lên Registry. Lần lượt dán các câu lệnh như hình bên dưới vào cửa sổ terminal tại thư mục gốc của repository vừa mới clone để push image lên repository của ECR vừa mới tạo Thứ tự các câu lệnh tương đương với các nội dung sau: Authenticate Docker với ECR Build docker image từ Dockerfile Gắn tag image vừa build với tên của repository trên ECR Push image lên ECR Dưới đây là ví dụ về kết quả hiển thị trên repository của ECR khi push image thành công. "
+},
+{
+	"uri": "/8-cluster-asg/8.3-load-test/",
+	"title": "Kiểm tra",
+	"tags": [],
+	"description": "",
+	"content": "Kiểm tra Ping request đến ALB ab -n 100000 -c 200 \u0026lt;dns-name\u0026gt; Kết quả Vào CloudWatch, nhấn chọn All Alarm, bạn sẽ thấy alarm của service ở trạng thái In Alarm Đây là event log của deployment Các instances được khởi chạy thêm theo ASG Các task được khởi chạy thêm "
+},
+{
+	"uri": "/4-create-cluster-and-task-definition/",
+	"title": "Tạo Cluster và Task Definition",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, chúng ta sẽ thực hiện tạo Cluster cho ECS và task definition.\nNội dung Tạo Cluster Tạo Task Definition "
+},
+{
+	"uri": "/5-create-alb-and-target-groups/",
+	"title": "Tạo ALB và Target groups",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, chúng ta sẽ thực hiện tạo Application Load Balancer cho ECS đặt tại public subnet, cấu hình listener và target groups.\nNội dung Tạo Target Groups Tạo ALB "
+},
+{
+	"uri": "/6-create-services/",
+	"title": "Tạo các services và kiểm tra",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, chúng ta sẽ thực hiện tạo Services cho ECS đặt tại private subnet và kiểm tra ứng dụng.\nNội dung Tạo Services Kiểm tra "
+},
+{
+	"uri": "/7-service-asg/",
+	"title": "Services auto scaling",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, chúng ta sẽ thực hiện tạo Services có khả năng mở rộng bằng cách kết hợp với Auto Scaling Group.\nNội dung Tạo Services Kiểm tra "
+},
+{
+	"uri": "/8-cluster-asg/",
+	"title": "Cluster auto scaling",
+	"tags": [],
+	"description": "",
+	"content": "Trong bước này, chúng ta sẽ thực hiện tạo Cluster có khả năng mở rộng bằng cách kết hợp với Auto Scaling Group.\nNội dung Tạo Cluster Tạo services Kiểm tra "
+},
+{
+	"uri": "/9-cleanup-resources/",
+	"title": "Dọn dẹp tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Dọn dẹp tài nguyên Xóa services Chọn ecs-services sau đó nhấn Delete service Tiếp tục với các service còn lại Confirm Nhấn chọn Force delete service Gõ delete Nhấn Delete để xóa, tương tự với các confirm bên dưới Truy cập vào cluster sau đó nhấn Delete cluster, sau đó confirm để xóa Truy cập vào task definition đã tạo Nhấn chọn revision sau đó chọn Deregister ở phần Actions Confirm để xóa Chuyển filter sang Inactive task definitions Nhấn chọn revision sau đó chọn Delete ở phần Actions Confirm để xóa Truy cập vào Target groups Nhấn chọn target group đã tạo, sau đó nhấn Delete Confirm để xóa Truy cập vào Load balancers Nhấn chọn load balancer đã tạo, sau đó nhấn Delete load balancer Confirm để xóa Truy cập vào Security groups Nhấn chọn security group đã tạo, sau đó nhấn Delete security groups Confirm để xóa Xóa ecs_port_container_sg trước, sau đó mới xóa ecs_public_port_sg\nTruy cập vào Cloud Formation Nhấn chọn stack đã tạo, sau đó nhấn Delete Confirm để xóa Truy cập vào Amazon ECR Nhấn chọn repository đã tạo, sau đó nhấn Delete Confirm để xóa "
+},
+{
+	"uri": "/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kiểm tra on AWS ECS</title>
+    <link>/8-cluster-asg/8.3-load-test/</link>
+    <description>Recent content in Kiểm tra on AWS ECS</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>vi</language><atom:link href="/8-cluster-asg/8.3-load-test/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

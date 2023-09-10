@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tạo service on AWS ECS</title>
+    <link>/8-cluster-asg/8.2-create-service/</link>
+    <description>Recent content in Tạo service on AWS ECS</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>vi</language><atom:link href="/8-cluster-asg/8.2-create-service/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
