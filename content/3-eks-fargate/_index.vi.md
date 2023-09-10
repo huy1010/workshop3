@@ -1,9 +1,9 @@
 ---
-title : "Chuẩn bị môi trường"
+title : "EKS with Fargate mode"
 date :  "`r Sys.Date()`" 
-weight : 2 
+weight : 3 
 chapter : false
-pre : " <b> 2. </b> "
+pre : " <b> 3. </b> "
 ---
 
 {{% notice info %}}
@@ -17,7 +17,9 @@ Chúng ta sẽ khởi tạo 1 VPC với 2 public subnets, 2 private subnets, 1 i
 ![VPC diagrams](/images/2-prerequiste/vpc_diagrams.png) 
 
 ### Nội dung
-  - [Setup eksctl](2.1-setup-eksctl/)
-  - [Setup kubectl](2.2-setup-kubectl/)
+  - [Khởi tạo cluster](3.1-create-cluster/)
+  - [Deploy ứng dụng](3.2-deploy-in-fargate/)
+  - [Phân bổ tài nguyên cho ứng dụng](3.3-resource-allocation/)
+  - [Scaling Workload](3.4-scaling-workload/)
 
   

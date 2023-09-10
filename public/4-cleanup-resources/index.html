@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Tags :: AWS ECS</title>
+    <title>Dọn dẹp tài nguyên :: AWS ECS</title>
 
     
     <link href="/css/nucleus.css?1694317062" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/tags/">
+  <body class="" data-url="/4-cleanup-resources/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -394,7 +394,7 @@
     
     <li data-nav-id="/4-cleanup-resources/" title="Dọn dẹp tài nguyên" class="dd-item 
         
-        
+        active
         
         ">
       <a href="/4-cleanup-resources/">
@@ -445,22 +445,10 @@
                   
                     
                     
-                      <option id="vi" value="/tags/" selected>Tiếng Việt</option>
+                      <option id="vi" value="/4-cleanup-resources/" selected>Tiếng Việt</option>
                     
                   
               
-                  
-              
-          
-              
-              
-                  
-              
-                  
-                    
-                    
-                      <option id="en" value="/en/tags/">English</option>
-                    
                   
               
           
@@ -544,7 +532,7 @@
             
           
           
-            <a href='/'>Start EKS with fargate mode</a> > Tags
+            <a href='/'>Start EKS with fargate mode</a> > Dọn dẹp tài nguyên
           
         
           
@@ -555,7 +543,15 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -571,9 +567,7 @@
           
             <h1>
               
-                taxonomy ::
-              
-              Tags
+              Dọn dẹp tài nguyên
             </h1>
           
 
@@ -581,11 +575,82 @@
 
 
 
-
-
+	<h4 id="dọn-dẹp-tài-nguyên">Dọn dẹp tài nguyên</h4>
+<ol>
+<li>Xóa services
 <ul>
-	
+<li>Chọn ecs-services sau đó nhấn <strong>Delete service</strong></li>
+<li>Tiếp tục với các service còn lại
+<img src="/images/9-cleanup-resources/001.png" alt="Clean up"></li>
 </ul>
+</li>
+<li>Confirm
+<ul>
+<li>Nhấn chọn <strong>Force delete service</strong></li>
+<li>Gõ <strong>delete</strong></li>
+<li>Nhấn <strong>Delete</strong> để xóa, tương tự với các confirm bên dưới
+<img src="/images/9-cleanup-resources/002.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Truy cập vào cluster sau đó nhấn <strong>Delete cluster</strong>, sau đó confirm để xóa
+<img src="/images/9-cleanup-resources/003.png" alt="Clean up"></li>
+<li>Truy cập vào task definition đã tạo
+<ul>
+<li>Nhấn chọn revision sau đó chọn <strong>Deregister</strong> ở phần <strong>Actions</strong></li>
+<li>Confirm để xóa
+<img src="/images/9-cleanup-resources/004.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Chuyển filter sang <strong>Inactive task definitions</strong>
+<ul>
+<li>Nhấn chọn revision sau đó chọn <strong>Delete</strong> ở phần <strong>Actions</strong></li>
+<li>Confirm để xóa
+<img src="/images/9-cleanup-resources/005.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Truy cập vào <strong>Target groups</strong>
+<ul>
+<li>Nhấn chọn target group đã tạo, sau đó nhấn <strong>Delete</strong></li>
+<li>Confirm để xóa
+<img src="/images/9-cleanup-resources/006.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Truy cập vào <strong>Load balancers</strong>
+<ul>
+<li>Nhấn chọn load balancer đã tạo, sau đó nhấn <strong>Delete load balancer</strong></li>
+<li>Confirm để xóa
+<img src="/images/9-cleanup-resources/007.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Truy cập vào <strong>Security groups</strong>
+<ul>
+<li>Nhấn chọn security group đã tạo, sau đó nhấn <strong>Delete security groups</strong></li>
+<li>Confirm để xóa
+
+<div class="notices note" ><p>Xóa <strong>ecs_port_container_sg</strong> trước, sau đó mới xóa <strong>ecs_public_port_sg</strong></p>
+</div>
+
+<img src="/images/9-cleanup-resources/008.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Truy cập vào <strong>Cloud Formation</strong>
+<ul>
+<li>Nhấn chọn stack đã tạo, sau đó nhấn <strong>Delete</strong></li>
+<li>Confirm để xóa
+<img src="/images/9-cleanup-resources/009.png" alt="Clean up"></li>
+</ul>
+</li>
+<li>Truy cập vào <strong>Amazon ECR</strong>
+<ul>
+<li>Nhấn chọn repository đã tạo, sau đó nhấn <strong>Delete</strong></li>
+<li>Confirm để xóa
+<img src="/images/9-cleanup-resources/010.png" alt="Clean up"></li>
+</ul>
+</li>
+</ol>
+
+
+
 
 
 <footer class=" footline" >
@@ -792,6 +857,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -811,6 +877,8 @@
 
 	 
 	 
+		
+			<a class="nav nav-prev" href="/3-eks-fargate/3.3-scaling-workload/" title="Scaling workload"> <i class="fa fa-chevron-left"></i></a>
 		
 		
 			<a class="nav nav-next" href="/1-introduce/" title="Giới thiệu" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>

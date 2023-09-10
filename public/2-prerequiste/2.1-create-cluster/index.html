@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Tags :: AWS ECS</title>
+    <title>Khởi Tạo VPC :: AWS ECS</title>
 
     
     <link href="/css/nucleus.css?1694317062" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/tags/">
+  <body class="" data-url="/2-prerequiste/2.1-create-cluster/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -205,7 +205,7 @@
   
     
     <li data-nav-id="/2-prerequiste/" title="Các bước chuẩn bị" class="dd-item 
-        
+        parent
         
         
         ">
@@ -237,7 +237,7 @@
     
     <li data-nav-id="/2-prerequiste/2.1-create-cluster/" title="Khởi Tạo VPC" class="dd-item 
         
-        
+        active
         
         ">
       <a href="/2-prerequiste/2.1-create-cluster/">
@@ -445,22 +445,10 @@
                   
                     
                     
-                      <option id="vi" value="/tags/" selected>Tiếng Việt</option>
+                      <option id="vi" value="/2-prerequiste/2.1-create-cluster/" selected>Tiếng Việt</option>
                     
                   
               
-                  
-              
-          
-              
-              
-                  
-              
-                  
-                    
-                    
-                      <option id="en" value="/en/tags/">English</option>
-                    
                   
               
           
@@ -544,7 +532,13 @@
             
           
           
-            <a href='/'>Start EKS with fargate mode</a> > Tags
+            
+            
+          
+          
+            <a href='/'>Start EKS with fargate mode</a> > <a href='/2-prerequiste/'>Các bước chuẩn bị</a> > Khởi Tạo VPC
+          
+        
           
         
           
@@ -555,7 +549,15 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#khởi-tạo-aws-vpc-với-cloudformation-template">KHỞI TẠO AWS VPC với CloudFormation Template</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -571,9 +573,7 @@
           
             <h1>
               
-                taxonomy ::
-              
-              Tags
+              Khởi Tạo VPC
             </h1>
           
 
@@ -581,11 +581,56 @@
 
 
 
-
-
+	<h3 id="khởi-tạo-aws-vpc-với-cloudformation-template">KHỞI TẠO AWS VPC với CloudFormation Template</h3>
+<p>Trong phần này chúng ta sẽ khởi tạo VPC thông qua <strong>Cloud Formation</strong> bằng cái tải lên file yml đã cấu hình sẵn theo <a href="https://github.com/huy1010/nest-app-example/blob/master/template.yml">link sau</a>.</p>
+<ol>
+<li>Truy cập đến <strong>CloudFormation Management Console</strong> bằng cách gõ <strong>CloudFormation</strong> vào thanh tìm kiếm
+<img src="/images/2-prerequiste/2.1-create-vpc/001.png" alt="Cloud Formation"></li>
+<li>Trong giao diện của <strong>CloudFormation</strong>
 <ul>
-	
+<li>Nhấn chọn <strong>Create Stack</strong></li>
+<li>Nhấn chọn <strong>With new resources (standard)</strong>
+<img src="/images/2-prerequiste/2.1-create-vpc/002.png" alt="Cloud Formation"></li>
 </ul>
+</li>
+<li>Trong giao diện <strong>Create Stack</strong>
+<ul>
+<li>Ở phần <strong>Prepare templete</strong>, nhấn chọn <strong>Templete is ready</strong></li>
+<li>Ở phần <strong>Templete source</strong>, chọn <strong>Upload a templete file</strong></li>
+<li>Nhấn vào <strong>Choose file</strong> để tải lên file đã tải về theo link ở trên
+<img src="/images/2-prerequiste/2.1-create-vpc/003.png" alt="Cloud Formation"></li>
+</ul>
+</li>
+<li>Trong phần <strong>Specify stack details</strong>
+<ul>
+<li>Điền tên stack vào <strong>Stack name</strong>. Ví dụ <strong>ECS</strong>.</li>
+<li>Điền tên của VPC vào phần <strong>Environment Name</strong>. Ví dụ <strong>ecs</strong></li>
+<li>Nhấn <strong>Next</strong> để tiếp tục.
+<img src="/images/2-prerequiste/2.1-create-vpc/004.png" alt="Cloud Formation"></li>
+</ul>
+</li>
+<li>Trong phần <strong>Configure stack options</strong>
+<ul>
+<li>Nhấn <strong>Next</strong> để tiếp tục
+<img src="/images/2-prerequiste/2.1-create-vpc/005.png" alt="Cloud Formation"></li>
+</ul>
+</li>
+<li>Trong phần <strong>Review</strong>
+<ul>
+<li>Xem lại và kiểm tra các thông số và nhấn <strong>Submit</strong> để tiến hành khởi tạo VPC
+<img src="/images/2-prerequiste/2.1-create-vpc/006.png" alt="Cloud Formation">
+Sau khi chờ khoản  5 phút thì status của stack sẽ chuyển sang thành công.
+<img src="/images/2-prerequiste/2.1-create-vpc/007.png" alt="Cloud Formation"></li>
+</ul>
+</li>
+<li>Truy cập đến <strong>VPC console</strong> bằng cách gõ <strong>VPC</strong> vào ô tìm kiếm và chọn VPC ở bên dưới.
+<img src="/images/2-prerequiste/2.1-create-vpc/008.png" alt="Cloud Formation"></li>
+<li>Dưới đây là thông tin VPC bạn vừa mới tạo
+<img src="/images/2-prerequiste/2.1-create-vpc/009.png" alt="Cloud Formation"></li>
+</ol>
+
+
+
 
 
 <footer class=" footline" >
@@ -692,6 +737,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -706,6 +752,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -725,6 +772,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -812,8 +862,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/2-prerequiste/" title="Các bước chuẩn bị"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/1-introduce/" title="Giới thiệu" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/3-eks-fargate/" title="EKS with Fargate mode" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
