@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Dọn dẹp tài nguyên :: AWS ECS</title>
+    <title>Các đối tượng cơ bản trong Kubernetes :: AWS ECS</title>
 
     
     <link href="/css/nucleus.css?1694402669" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/4-cleanup-resources/">
+  <body class="" data-url="/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -83,7 +83,7 @@
   
     
     <li data-nav-id="/1-introduce/" title="Giới thiệu" class="dd-item 
-        
+        parent
         
         
         ">
@@ -170,7 +170,7 @@
   
     
     <li data-nav-id="/1-introduce/1.3-kubernetes-basic/" title="Kubernetes cơ bản" class="dd-item 
-        
+        parent
         
         
         ">
@@ -230,7 +230,7 @@
     
     <li data-nav-id="/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/" title="Các đối tượng cơ bản trong Kubernetes" class="dd-item 
         
-        
+        active
         
         ">
       <a href="/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/">
@@ -450,7 +450,7 @@
     
     <li data-nav-id="/4-cleanup-resources/" title="Dọn dẹp tài nguyên" class="dd-item 
         
-        active
+        
         
         ">
       <a href="/4-cleanup-resources/">
@@ -501,7 +501,7 @@
                   
                     
                     
-                      <option id="vi" value="/4-cleanup-resources/" selected>Tiếng Việt</option>
+                      <option id="vi" value="/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/" selected>Tiếng Việt</option>
                     
                   
               
@@ -588,7 +588,19 @@
             
           
           
-            <a href='/'>Start EKS with fargate mode</a> > Dọn dẹp tài nguyên
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Start EKS with fargate mode</a> > <a href='/1-introduce/'>Giới thiệu</a> > <a href='/1-introduce/1.3-kubernetes-basic/'>Kubernetes cơ bản</a> > Các đối tượng cơ bản trong Kubernetes
+          
+        
+          
+        
           
         
           
@@ -603,7 +615,7 @@
   <ul>
     <li>
       <ul>
-        <li></li>
+        <li><a href="#kubernetes-objects-cơ-bản">Kubernetes Objects cơ bản</a></li>
       </ul>
     </li>
   </ul>
@@ -623,7 +635,7 @@
           
             <h1>
               
-              Dọn dẹp tài nguyên
+              Các đối tượng cơ bản trong Kubernetes
             </h1>
           
 
@@ -631,79 +643,16 @@
 
 
 
-	<h4 id="dọn-dẹp-tài-nguyên">Dọn dẹp tài nguyên</h4>
-<ol>
-<li>Xóa services
-<ul>
-<li>Chọn ecs-services sau đó nhấn <strong>Delete service</strong></li>
-<li>Tiếp tục với các service còn lại
-<img src="/images/9-cleanup-resources/001.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Confirm
-<ul>
-<li>Nhấn chọn <strong>Force delete service</strong></li>
-<li>Gõ <strong>delete</strong></li>
-<li>Nhấn <strong>Delete</strong> để xóa, tương tự với các confirm bên dưới
-<img src="/images/9-cleanup-resources/002.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào cluster sau đó nhấn <strong>Delete cluster</strong>, sau đó confirm để xóa
-<img src="/images/9-cleanup-resources/003.png" alt="Clean up"></li>
-<li>Truy cập vào task definition đã tạo
-<ul>
-<li>Nhấn chọn revision sau đó chọn <strong>Deregister</strong> ở phần <strong>Actions</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/004.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Chuyển filter sang <strong>Inactive task definitions</strong>
-<ul>
-<li>Nhấn chọn revision sau đó chọn <strong>Delete</strong> ở phần <strong>Actions</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/005.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Target groups</strong>
-<ul>
-<li>Nhấn chọn target group đã tạo, sau đó nhấn <strong>Delete</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/006.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Load balancers</strong>
-<ul>
-<li>Nhấn chọn load balancer đã tạo, sau đó nhấn <strong>Delete load balancer</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/007.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Security groups</strong>
-<ul>
-<li>Nhấn chọn security group đã tạo, sau đó nhấn <strong>Delete security groups</strong></li>
-<li>Confirm để xóa
-
-<div class="notices note" ><p>Xóa <strong>ecs_port_container_sg</strong> trước, sau đó mới xóa <strong>ecs_public_port_sg</strong></p>
-</div>
-
-<img src="/images/9-cleanup-resources/008.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Cloud Formation</strong>
-<ul>
-<li>Nhấn chọn stack đã tạo, sau đó nhấn <strong>Delete</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/009.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Amazon ECR</strong>
-<ul>
-<li>Nhấn chọn repository đã tạo, sau đó nhấn <strong>Delete</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/010.png" alt="Clean up"></li>
-</ul>
-</li>
-</ol>
+	<h3 id="kubernetes-objects-cơ-bản">Kubernetes Objects cơ bản</h3>
+<p>Trong phạm vi bài lab, mình sẽ chỉ giới thiệu tới các objects cơ bản nhất được sử dụng trong lab. Các bạn có thể tìm hiểu thêm về các objects khác tại <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/">đây</a>.</p>
+<h4 id="pods">Pods</h4>
+<p>Khi một ứng dụng được đóng gói thì ứng dụng đó sẽ có thể chạy trên một container độc lập, tuy chúng ta có thể chạy container độc lập như cách khởi chạy một ứng dụng monolythic, nhưng Kubernetes sẽ không chạy theo cách như vậy, Kubernetes sử dụng khái niệm pod để nhóm các container lại với nhau. Một pod là một nhóm các container, các container này sẽ dùng chung tài nguyên và network, các container trong một pod có thể duy trì giao tiếp với nhau như trên một máy chủ nhưng vẫn giữ được sự độc lập cần thiết.</p>
+<h4 id="deployments">Deployments</h4>
+<p>Trong Kubernetes, đối tượng Deployment là đối tượng chính đảm nhận việc deploy và quản lý ứng dụng của chúng ta. Nó cho phép chúng ta deploy các Pod, update Pod, rollback Pod</p>
+<h4 id="namespaces">Namespaces</h4>
+<p>Namespace là một thành phần logic được Kubernetes sử dụng để xác định phạm vi quản lý các resource. Mặc định, Kubernetes sẽ tạo ra một namespace có tên là default, tất cả các resource được tạo ra mà không chỉ định namespace sẽ được tạo ra trong namespace default. Các bạn có thể tạo ra các namespace khác để phân chia các resource trong cluster.</p>
+<h4 id="services">Services</h4>
+<p>Kubernetes service là một tài nguyên xác định ra một pod hoặc một nhóm các pod cung cấp cùng một dịch vụ và chính sách truy cập đến các pod đó. Đối với service, Kubernetes cũng cung cấp cho chúng ta nhiều kiểu service khác nhau để phù hợp với nhiều yêu cầu khác nhau.</p>
 
 
 
@@ -744,8 +693,133 @@
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
                         
                         
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
                     
                 
                 
@@ -799,122 +873,6 @@
 
                     
                     
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
                     
 
                     
@@ -944,7 +902,6 @@
             
             
                 
-                    
                     
                 
                 
@@ -966,10 +923,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/3-eks-fargate/3.4-scaling-workload/" title="Scaling workload"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/" title="Kiến trúc cơ bản của Kubernetes"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/1-introduce/" title="Giới thiệu" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/2-prerequiste/" title="Chuẩn bị môi trường" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

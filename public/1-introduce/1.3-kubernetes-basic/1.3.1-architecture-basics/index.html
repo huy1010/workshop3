@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Dọn dẹp tài nguyên :: AWS ECS</title>
+    <title>Kiến trúc cơ bản của Kubernetes :: AWS ECS</title>
 
     
     <link href="/css/nucleus.css?1694402669" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/4-cleanup-resources/">
+  <body class="" data-url="/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -83,7 +83,7 @@
   
     
     <li data-nav-id="/1-introduce/" title="Giới thiệu" class="dd-item 
-        
+        parent
         
         
         ">
@@ -170,7 +170,7 @@
   
     
     <li data-nav-id="/1-introduce/1.3-kubernetes-basic/" title="Kubernetes cơ bản" class="dd-item 
-        
+        parent
         
         
         ">
@@ -202,7 +202,7 @@
     
     <li data-nav-id="/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/" title="Kiến trúc cơ bản của Kubernetes" class="dd-item 
         
-        
+        active
         
         ">
       <a href="/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/">
@@ -450,7 +450,7 @@
     
     <li data-nav-id="/4-cleanup-resources/" title="Dọn dẹp tài nguyên" class="dd-item 
         
-        active
+        
         
         ">
       <a href="/4-cleanup-resources/">
@@ -501,7 +501,7 @@
                   
                     
                     
-                      <option id="vi" value="/4-cleanup-resources/" selected>Tiếng Việt</option>
+                      <option id="vi" value="/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/" selected>Tiếng Việt</option>
                     
                   
               
@@ -588,7 +588,19 @@
             
           
           
-            <a href='/'>Start EKS with fargate mode</a> > Dọn dẹp tài nguyên
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Start EKS with fargate mode</a> > <a href='/1-introduce/'>Giới thiệu</a> > <a href='/1-introduce/1.3-kubernetes-basic/'>Kubernetes cơ bản</a> > Kiến trúc cơ bản của Kubernetes
+          
+        
+          
+        
           
         
           
@@ -603,7 +615,9 @@
   <ul>
     <li>
       <ul>
-        <li></li>
+        <li><a href="#control-plane">Control Plane</a></li>
+        <li><a href="#worker-nodes">Worker Nodes</a></li>
+        <li><a href="#kubectl">Kubectl</a></li>
       </ul>
     </li>
   </ul>
@@ -623,7 +637,7 @@
           
             <h1>
               
-              Dọn dẹp tài nguyên
+              Kiến trúc cơ bản của Kubernetes
             </h1>
           
 
@@ -631,79 +645,29 @@
 
 
 
-	<h4 id="dọn-dẹp-tài-nguyên">Dọn dẹp tài nguyên</h4>
-<ol>
-<li>Xóa services
-<ul>
-<li>Chọn ecs-services sau đó nhấn <strong>Delete service</strong></li>
-<li>Tiếp tục với các service còn lại
-<img src="/images/9-cleanup-resources/001.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Confirm
-<ul>
-<li>Nhấn chọn <strong>Force delete service</strong></li>
-<li>Gõ <strong>delete</strong></li>
-<li>Nhấn <strong>Delete</strong> để xóa, tương tự với các confirm bên dưới
-<img src="/images/9-cleanup-resources/002.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào cluster sau đó nhấn <strong>Delete cluster</strong>, sau đó confirm để xóa
-<img src="/images/9-cleanup-resources/003.png" alt="Clean up"></li>
-<li>Truy cập vào task definition đã tạo
-<ul>
-<li>Nhấn chọn revision sau đó chọn <strong>Deregister</strong> ở phần <strong>Actions</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/004.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Chuyển filter sang <strong>Inactive task definitions</strong>
-<ul>
-<li>Nhấn chọn revision sau đó chọn <strong>Delete</strong> ở phần <strong>Actions</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/005.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Target groups</strong>
-<ul>
-<li>Nhấn chọn target group đã tạo, sau đó nhấn <strong>Delete</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/006.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Load balancers</strong>
-<ul>
-<li>Nhấn chọn load balancer đã tạo, sau đó nhấn <strong>Delete load balancer</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/007.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Security groups</strong>
-<ul>
-<li>Nhấn chọn security group đã tạo, sau đó nhấn <strong>Delete security groups</strong></li>
-<li>Confirm để xóa
-
-<div class="notices note" ><p>Xóa <strong>ecs_port_container_sg</strong> trước, sau đó mới xóa <strong>ecs_public_port_sg</strong></p>
-</div>
-
-<img src="/images/9-cleanup-resources/008.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Cloud Formation</strong>
-<ul>
-<li>Nhấn chọn stack đã tạo, sau đó nhấn <strong>Delete</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/009.png" alt="Clean up"></li>
-</ul>
-</li>
-<li>Truy cập vào <strong>Amazon ECR</strong>
-<ul>
-<li>Nhấn chọn repository đã tạo, sau đó nhấn <strong>Delete</strong></li>
-<li>Confirm để xóa
-<img src="/images/9-cleanup-resources/010.png" alt="Clean up"></li>
-</ul>
-</li>
-</ol>
+	<h1 id="kiến-trúc-cơ-bản-của-kubernetes">Kiến trúc cơ bản của Kubernetes</h1>
+<p><img src="/images/1-introduce/001.png" alt="Architect">
+Một cụm cluster sẽ gồm nhiều máy chạy với nhau gọi là node. để quản lý các node trong cũng như việc giao tiếp giữa các node với nhau, Kubernetes sử dụng Control Plane được đặt tại Master Node. Những node còn lại được dùng để chạy các workloads gọi là Worker node.</p>
+<h3 id="control-plane">Control Plane</h3>
+<p>Là phần đầu của Kubernetes, nơi chứa các thành phần quản lý và điều khiển các node trong cluster. Control Plane bao gồm các thành phần sau:</p>
+<h4 id="api-server">API Server</h4>
+<p>Là thành phần chịu trách nhiệm cung cấp API cho các thành phần khác trong Control Plane. API Server cũng là thành phần duy nhất trong Control Plane có thể truy cập từ bên ngoài cluster. Dùng để tương tác với cluster thông qua API</p>
+<h4 id="scheduler">Scheduler</h4>
+<p>Là thành phần chịu trách nhiệm lên lịch chạy các Pod trên các node trong cluster. Scheduler sẽ chọn ra node phù hợp để chạy Pod dựa trên các yêu cầu của Pod đó.</p>
+<h4 id="controller-manager">Controller Manager</h4>
+<p>Là thành phần chịu trách nhiệm quản lý các controller trong cluster. Có rất nhiều thành phần cần được quản lý trong Cluster controllers sinh ra để làm việc đó. Các bạn có thể tìm hiểu thêm về Controller tại <a href="https://kubernetes.io/docs/concepts/architecture/controller/">đây</a>. Nói đơn giản, Controller Manager là tổng hợp các controller trong cluster lại.</p>
+<h4 id="etcd">etcd</h4>
+<p>Là thành phần chịu trách nhiệm lưu trữ dữ liệu của cluster. etcd là một key-value store được sử dụng để lưu trữ thông tin cấu hình của cluster. Các thành phần trong Control Plane sẽ lưu trữ thông tin của chúng vào etcd. Các thành phần khác trong cluster sẽ lấy thông tin từ etcd để thực hiện các tác vụ của mình.</p>
+<h3 id="worker-nodes">Worker Nodes</h3>
+<p>Là nơi chạy các workloads của cluster. Mỗi node sẽ chạy một hoặc nhiều Pod. Worker Nodes bao gồm các thành phần sau:</p>
+<h4 id="kubelet">Kubelet</h4>
+<p>Là thành phần chịu trách nhiệm quản lý các Pod trên node. Kubelet sẽ nhận các yêu cầu từ API Server và thực hiện các tác vụ đó trên node. Kubelet cũng sẽ gửi các thông tin về trạng thái của node lên API Server để các thành phần khác trong Control Plane có thể lấy thông tin đó.</p>
+<h4 id="kube-proxy">Kube-proxy</h4>
+<p>Là thành phần chịu trách nhiệm quản lý mạng trên node. Kube-proxy sẽ tạo ra các rule để các Pod có thể giao tiếp với nhau. Kube-proxy cũng sẽ tạo ra các rule để các Pod có thể giao tiếp với bên ngoài cluster.</p>
+<h4 id="container-runtime">Container Runtime</h4>
+<p>Là thành phần chịu trách nhiệm quản lý các container trên node. Container Runtime sẽ tạo ra các container dựa trên các yêu cầu từ Kubelet. Container Runtime cũng sẽ gửi các thông tin về trạng thái của các container lên Kubelet để các thành phần khác trong Control Plane có thể lấy thông tin đó.</p>
+<h3 id="kubectl">Kubectl</h3>
+<p>Là công cụ dùng để tương tác với cluster thông qua API Server. Kubectl sẽ gửi các yêu cầu của người dùng lên API Server và nhận các kết quả trả về từ API Server. Kubectl cũng sẽ gửi các yêu cầu của người dùng lên API Server và nhận các kết quả trả về từ API Server. Tìm hiểu thêm về Kubectl tại <a href="https://kubernetes.io/docs/reference/kubectl/overview/">đây</a>.</p>
 
 
 
@@ -744,8 +708,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -762,6 +724,9 @@
             
                 
                     
+                        
+                        
+                    
                 
                 
 
@@ -769,6 +734,80 @@
                     
                     
 
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
                     
             
         
@@ -836,75 +875,6 @@
             
         
                     
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
             
             
@@ -944,7 +914,6 @@
             
             
                 
-                    
                     
                 
                 
@@ -966,10 +935,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/3-eks-fargate/3.4-scaling-workload/" title="Scaling workload"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/1-introduce/1.3-kubernetes-basic/" title="Kubernetes cơ bản"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/1-introduce/" title="Giới thiệu" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/" title="Các đối tượng cơ bản trong Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

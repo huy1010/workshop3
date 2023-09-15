@@ -6,7 +6,6 @@ chapter : false
 pre : " <b> 1.3.1 </b> "
 ---
 
-# Kiến trúc cơ bản của Kubernetes
 ![Architect](/images/1-introduce/001.png)
 Một cụm cluster sẽ gồm nhiều máy chạy với nhau gọi là node. để quản lý các node trong cũng như việc giao tiếp giữa các node với nhau, Kubernetes sử dụng Control Plane được đặt tại Master Node. Những node còn lại được dùng để chạy các workloads gọi là Worker node.
 ### Control Plane

@@ -4,14 +4,7 @@
 	"title": "Amazon EKS",
 	"tags": [],
 	"description": "",
-	"content": "Amazon Elastic Container Service (ECS) Amazon Elastic Container Service (Amazon ECS), theo định nghĩa của AWS là một dịch vụ quản lý container có khả năng mở rộng cao, dễ dàng run, stop, hay quản lý docker container ở trong một cluster. Bạn có thể host một serverless infrastructure bằng cách chạy service hay task sử dụng Fargate launch type hoặc sử dụng EC2 launch type để chạy các EC2 instance. ECS chạy các container trong cluster dựa trên các EC2 được cài sẵn Docker. Bạn có thể dễ dàng quản lý các container của mình thông qua Cluster. ECS là một dịch vụ chạy theo region, và nó hoạt động trong VPC. Sau khi một cluster được khởi tạo và chạy, bạn có thể định nghĩa các task và services mà nó chỉ định Docker container image sẽ chạy thông qua clusters. ECS có hai dạng được triển khai là chạy trên các EC2 và serverless(fargate).\nCác thành phần khác Task definition Task definition là một bản thiết kế cho ứng dụng của bạn. Nó sẽ định nghĩa image nào được chạy trong container, giới hạn sử dụng CPU và bộ nhớ cho mỗi container được chạy. Lựa chọn các mode networking của Docker có trên AWS ECS và port.\nTask Mỗi một Task tương ứng với mỗi bản Task definition được chạy trên cluster. Nhiều task có thể được chạy bởi cùng một Task definition. Với mỗi một task sử dụng Fargate launch type có một ranh giới riêng biệt và không chia sẻ kernel, tài nguyên cpu, bộ nhớ, hay elastic network interface với task khác.\nService Xác định mức tối thiểu và tối đa của một hoặc nhiều Task từ một Task Definition chạy tại bất kỳ thời điểm nhất định nào. Đây là tính năng scale và cân bằng tải. Service còn quy định việc các task được chạy ở đâu ở các subnets.\n"
-},
-{
-	"uri": "/3-eks-fargate/3.1-deploy-in-fargate/",
-	"title": "Deploy ứng dụng trong Fargate",
-	"tags": [],
-	"description": "",
-	"content": ""
+	"content": "Amazon Elastic Kubernetes Service (EKS) Amazon Elastic Kubernetes Service (EKS) là một dịch vụ cho phép người dùng vận hành Kubernetes trên AWS một cách dễ dàng. Nó cung cấp các tính năng như tự động triển khai, quản lý, và mở rộng các ứng dụng container sử dụng Kubernetes. Ngoài ra EKS còn được kết nối với các dịch vụ khác như CloudWatch, Auto Scaling Group, Load Balancer, IAM, VPC, và các dịch vụ khác của AWS.\nCác tính năng chính của EKS Secure networking and authentication EKS khởi chạy cluster của bạn trong AWS networking và sử dụng IAM để xác thực và quản lý quyền truy cập vào cluster của bạn. Việc này sẽ tăng tính bảo mật cho các workload của bạn khi chạy trên EKS.\nHighly available and scalable EKS sử dụng các master node được triển khai trên nhiều Availability Zone (AZ) để đảm bảo tính sẵn sàng cao và khả năng mở rộng. Ngoài ra, EKS còn hỗ trợ các tính năng như Auto Scaling Group, Elastic Load Balancing, và Elastic Block Store để đảm bảo tính sẵn sàng và khả năng mở rộng cho các ứng dụng của bạn.\nManaged Kubernetes experience Bạn có thể quản lý cluster của mình bằng nhiều công cụ khác nhau như eksctl, AWS management console, AWS CLI, và các công cụ khác. Ngoài ra, bạn cũng có thể sử dụng các công cụ quản lý Kubernetes như kubectl để quản lý cluster của mình. Trong bài lab này mình sẽ sử dụng eksctl và kubectl để quản lý cluster.\n"
 },
 {
 	"uri": "/1-introduce/",
@@ -21,36 +14,50 @@
 	"content": "Nội dung Amazon EKS Amazon Fargate Kubernetes cơ bản "
 },
 {
-	"uri": "/2-prerequiste/2.1-create-cluster/",
-	"title": "Khởi Tạo VPC",
+	"uri": "/3-eks-fargate/3.1-create-cluster/",
+	"title": "Khởi tạo Cluster",
 	"tags": [],
 	"description": "",
-	"content": "KHỞI TẠO AWS VPC với CloudFormation Template Trong phần này chúng ta sẽ khởi tạo VPC thông qua Cloud Formation bằng cái tải lên file yml đã cấu hình sẵn theo link sau.\nTruy cập đến CloudFormation Management Console bằng cách gõ CloudFormation vào thanh tìm kiếm Trong giao diện của CloudFormation Nhấn chọn Create Stack Nhấn chọn With new resources (standard) Trong giao diện Create Stack Ở phần Prepare templete, nhấn chọn Templete is ready Ở phần Templete source, chọn Upload a templete file Nhấn vào Choose file để tải lên file đã tải về theo link ở trên Trong phần Specify stack details Điền tên stack vào Stack name. Ví dụ ECS. Điền tên của VPC vào phần Environment Name. Ví dụ ecs Nhấn Next để tiếp tục. Trong phần Configure stack options Nhấn Next để tiếp tục Trong phần Review Xem lại và kiểm tra các thông số và nhấn Submit để tiến hành khởi tạo VPC Sau khi chờ khoản 5 phút thì status của stack sẽ chuyển sang thành công. Truy cập đến VPC console bằng cách gõ VPC vào ô tìm kiếm và chọn VPC ở bên dưới. Dưới đây là thông tin VPC bạn vừa mới tạo "
+	"content": ""
+},
+{
+	"uri": "/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/",
+	"title": "Kiến trúc cơ bản của Kubernetes",
+	"tags": [],
+	"description": "",
+	"content": "Kiến trúc cơ bản của Kubernetes Một cụm cluster sẽ gồm nhiều máy chạy với nhau gọi là node. để quản lý các node trong cũng như việc giao tiếp giữa các node với nhau, Kubernetes sử dụng Control Plane được đặt tại Master Node. Những node còn lại được dùng để chạy các workloads gọi là Worker node.\nControl Plane Là phần đầu của Kubernetes, nơi chứa các thành phần quản lý và điều khiển các node trong cluster. Control Plane bao gồm các thành phần sau:\nAPI Server Là thành phần chịu trách nhiệm cung cấp API cho các thành phần khác trong Control Plane. API Server cũng là thành phần duy nhất trong Control Plane có thể truy cập từ bên ngoài cluster. Dùng để tương tác với cluster thông qua API\nScheduler Là thành phần chịu trách nhiệm lên lịch chạy các Pod trên các node trong cluster. Scheduler sẽ chọn ra node phù hợp để chạy Pod dựa trên các yêu cầu của Pod đó.\nController Manager Là thành phần chịu trách nhiệm quản lý các controller trong cluster. Có rất nhiều thành phần cần được quản lý trong Cluster controllers sinh ra để làm việc đó. Các bạn có thể tìm hiểu thêm về Controller tại đây. Nói đơn giản, Controller Manager là tổng hợp các controller trong cluster lại.\netcd Là thành phần chịu trách nhiệm lưu trữ dữ liệu của cluster. etcd là một key-value store được sử dụng để lưu trữ thông tin cấu hình của cluster. Các thành phần trong Control Plane sẽ lưu trữ thông tin của chúng vào etcd. Các thành phần khác trong cluster sẽ lấy thông tin từ etcd để thực hiện các tác vụ của mình.\nWorker Nodes Là nơi chạy các workloads của cluster. Mỗi node sẽ chạy một hoặc nhiều Pod. Worker Nodes bao gồm các thành phần sau:\nKubelet Là thành phần chịu trách nhiệm quản lý các Pod trên node. Kubelet sẽ nhận các yêu cầu từ API Server và thực hiện các tác vụ đó trên node. Kubelet cũng sẽ gửi các thông tin về trạng thái của node lên API Server để các thành phần khác trong Control Plane có thể lấy thông tin đó.\nKube-proxy Là thành phần chịu trách nhiệm quản lý mạng trên node. Kube-proxy sẽ tạo ra các rule để các Pod có thể giao tiếp với nhau. Kube-proxy cũng sẽ tạo ra các rule để các Pod có thể giao tiếp với bên ngoài cluster.\nContainer Runtime Là thành phần chịu trách nhiệm quản lý các container trên node. Container Runtime sẽ tạo ra các container dựa trên các yêu cầu từ Kubelet. Container Runtime cũng sẽ gửi các thông tin về trạng thái của các container lên Kubelet để các thành phần khác trong Control Plane có thể lấy thông tin đó.\nKubectl Là công cụ dùng để tương tác với cluster thông qua API Server. Kubectl sẽ gửi các yêu cầu của người dùng lên API Server và nhận các kết quả trả về từ API Server. Kubectl cũng sẽ gửi các yêu cầu của người dùng lên API Server và nhận các kết quả trả về từ API Server. Tìm hiểu thêm về Kubectl tại đây.\n"
 },
 {
 	"uri": "/",
 	"title": "Start EKS with fargate mode",
 	"tags": [],
 	"description": "",
-	"content": "Làm việc với ECS - ECR Tổng quan Trong bài lab này, bạn sẽ tìm hiểu các khái niệm cơ bản và thực hành về ECS - ECR. Thực hành tạo các services chạy task trong các private subnets và gắn load balancing cho ECS.\nNội dung Giới thiệu Các bước chuẩn bị EKS với Fargate Dọn dẹp tài nguyên "
+	"content": "Bắt đầu với EKS và Fargate mode Tổng quan Trong bài lab này, bạn sẽ tìm hiểu các khái niệm cơ bản và thực hành về ECS - ECR. Thực hành tạo các services chạy task trong các private subnets và gắn load balancing cho ECS.\nNội dung Giới thiệu Các bước chuẩn bị EKS với Fargate Dọn dẹp tài nguyên Fargate không nằm trong free tier của AWS. Bạn sẽ phải trả phí cho các tài nguyên sử dụng trong bài lab này. Bạn có thể tìm hiểu thêm về giá cả của Fargate tại đây.\n"
 },
 {
 	"uri": "/1-introduce/1.2-amazon-fargate/",
 	"title": "Amazon Fargate",
 	"tags": [],
 	"description": "",
-	"content": "Amazon Elastic Container Service (ECS) Amazon Elastic Container Service (Amazon ECS), theo định nghĩa của AWS là một dịch vụ quản lý container có khả năng mở rộng cao, dễ dàng run, stop, hay quản lý docker container ở trong một cluster. Bạn có thể host một serverless infrastructure bằng cách chạy service hay task sử dụng Fargate launch type hoặc sử dụng EC2 launch type để chạy các EC2 instance. ECS chạy các container trong cluster dựa trên các EC2 được cài sẵn Docker. Bạn có thể dễ dàng quản lý các container của mình thông qua Cluster. ECS là một dịch vụ chạy theo region, và nó hoạt động trong VPC. Sau khi một cluster được khởi tạo và chạy, bạn có thể định nghĩa các task và services mà nó chỉ định Docker container image sẽ chạy thông qua clusters. ECS có hai dạng được triển khai là chạy trên các EC2 và serverless(fargate).\nCác thành phần khác Task definition Task definition là một bản thiết kế cho ứng dụng của bạn. Nó sẽ định nghĩa image nào được chạy trong container, giới hạn sử dụng CPU và bộ nhớ cho mỗi container được chạy. Lựa chọn các mode networking của Docker có trên AWS ECS và port.\nTask Mỗi một Task tương ứng với mỗi bản Task definition được chạy trên cluster. Nhiều task có thể được chạy bởi cùng một Task definition. Với mỗi một task sử dụng Fargate launch type có một ranh giới riêng biệt và không chia sẻ kernel, tài nguyên cpu, bộ nhớ, hay elastic network interface với task khác.\nService Xác định mức tối thiểu và tối đa của một hoặc nhiều Task từ một Task Definition chạy tại bất kỳ thời điểm nhất định nào. Đây là tính năng scale và cân bằng tải. Service còn quy định việc các task được chạy ở đâu ở các subnets.\n"
+	"content": "Amazon Fargate Amazon Fargate, là một dịch vụ container serverless. Khi khởi chạy các container của bạn trên EKS với fargate bạn sẽ không cần quan tâm về việc cấp phát, quản lý, mở rộng các cụm EC2. Bạn chỉ cần tập trung vào việc triển khai các ứng dụng của mình. Fargate sẽ giúp bạn quản lý các tài nguyên cần thiết để chạy các ứng dụng của bạn. Ngoài ra, bạn cũng có thể sử dụng Fargate để chạy các ứng dụng container trên ECS.\nBạn có thể kiểm soát Pod khởi chạy trên Fargate và cách chúng chạy. Amazon EKS tích hợp Kubernetes với Fargate bằng cách sử dụng controllers do AWS xây dựng. Các controllers này chạy như một phần control plane của Kubernetes do Amazon EKS quản lý và chịu trách nhiệm lên lịch cho các Kubernetes Pod trên Fargate. Khi bạn khởi chạy một Pod đáp ứng các tiêu chí để chạy trên Fargate, Controller Fargate đang chạy trong cluster sẽ nhận dạng, cập nhật và lên lịch Pod chạy trên Fargate mode.\nFargate profile Trước khi khởi chạy bất kì Pod nào trên Fargate bận cần phải define Fargate profile trên cluster. Các thành phần của Fargate profile bao gồm:\nSelectors: Các selectors được sử dụng để xác định các Pod nào sẽ được khởi chạy trên Fargate. Các selectors này có thể là namespace, label, hoặc annotation của Pod. Subnets: Các subnets được sử dụng để khởi chạy các Pod trên Fargate. Các subnets này phải là private subnets. Pod execution role: Các Pod sẽ được khởi chạy trên Fargate sẽ được gán một IAM role. Role này sẽ được sử dụng để ghi log, truy cập vào các service khác như ECR, S3, và các service khác của AWS. Các điểm đặc biệt cần biết khi chạy Kubernetes trên Fargate Mỗi Pod chạy trên Fargate sẽ có một địa chỉ IP riêng biệt. các Pod sẽ không chia sẽ CPU, Memory, địa chỉ IP với các Pod khác. Các pod bắt buộc phải match với Fargate profile lúc chúng được lên lịch khởi chạy. Những Pod không match với Farmgate profile sẽ không được khởi chạy và sẽ ở trạng thái Pending. Pods chạy trên Fargate chỉ support cho các private subnets. Nên VPC chứa cluster cần phải có ít nhất 1 private subnet. Trên đây chỉ là các lưu ý cơ bản khi khởi chạy Fargate mode. Bạn có thể tìm hiểu thêm về Fargate mode tại đây.\n"
+},
+{
+	"uri": "/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/",
+	"title": "Các đối tượng cơ bản trong Kubernetes",
+	"tags": [],
+	"description": "",
+	"content": "Kubernetes Objects cơ bản Trong phạm vi bài lab, mình sẽ chỉ giới thiệu tới các objects cơ bản nhất được sử dụng trong lab. Các bạn có thể tìm hiểu thêm về các objects khác tại đây.\nPods Khi một ứng dụng được đóng gói thì ứng dụng đó sẽ có thể chạy trên một container độc lập, tuy chúng ta có thể chạy container độc lập như cách khởi chạy một ứng dụng monolythic, nhưng Kubernetes sẽ không chạy theo cách như vậy, Kubernetes sử dụng khái niệm pod để nhóm các container lại với nhau. Một pod là một nhóm các container, các container này sẽ dùng chung tài nguyên và network, các container trong một pod có thể duy trì giao tiếp với nhau như trên một máy chủ nhưng vẫn giữ được sự độc lập cần thiết.\nDeployments Trong Kubernetes, đối tượng Deployment là đối tượng chính đảm nhận việc deploy và quản lý ứng dụng của chúng ta. Nó cho phép chúng ta deploy các Pod, update Pod, rollback Pod\nNamespaces Namespace là một thành phần logic được Kubernetes sử dụng để xác định phạm vi quản lý các resource. Mặc định, Kubernetes sẽ tạo ra một namespace có tên là default, tất cả các resource được tạo ra mà không chỉ định namespace sẽ được tạo ra trong namespace default. Các bạn có thể tạo ra các namespace khác để phân chia các resource trong cluster.\nServices Kubernetes service là một tài nguyên xác định ra một pod hoặc một nhóm các pod cung cấp cùng một dịch vụ và chính sách truy cập đến các pod đó. Đối với service, Kubernetes cũng cung cấp cho chúng ta nhiều kiểu service khác nhau để phù hợp với nhiều yêu cầu khác nhau.\n"
 },
 {
 	"uri": "/2-prerequiste/",
-	"title": "Các bước chuẩn bị",
+	"title": "Chuẩn bị môi trường",
 	"tags": [],
 	"description": "",
-	"content": "\rChúng ta sẽ khởi tạo 1 VPC với 2 public subnets, 2 private subnets, 1 internet gateway, default route cho các public subnets. 2 NAT gateway cho các private subnets. NAT gateway sẽ tốn phí nên cần xóa khi không sử dụng nữa.\nĐể tìm hiểu cách tạo VPC với public/private subnet các bạn có thể tham khảo bài lab :\nLàm việc với Amazon VPC Ở phần này chúng ta sẽ khởi tạo môi trường mạng để cho các service trong cluster cũng như load balancer được hoạt động. Dưới đây là kết quả sau khi tạo VPC và nơi các ECS được hoạt động. Nội dung Chuẩn bị VPC "
+	"content": "Nội dung Setup eksctl Setup kubectl "
 },
 {
-	"uri": "/3-eks-fargate/3.2-resource-allocation/",
-	"title": "Phân bổ tài nguyên cho ứng dụng",
+	"uri": "/3-eks-fargate/3.2-deploy-in-fargate/",
+	"title": "Deploy ứng dụng trong Fargate",
 	"tags": [],
 	"description": "",
 	"content": ""
@@ -60,17 +67,24 @@
 	"title": "EKS with Fargate mode",
 	"tags": [],
 	"description": "",
-	"content": "\rChúng ta sẽ khởi tạo 1 VPC với 2 public subnets, 2 private subnets, 1 internet gateway, default route cho các public subnets. 2 NAT gateway cho các private subnets. NAT gateway sẽ tốn phí nên cần xóa khi không sử dụng nữa.\nĐể tìm hiểu cách tạo VPC với public/private subnet các bạn có thể tham khảo bài lab :\nLàm việc với Amazon VPC Ở phần này chúng ta sẽ khởi tạo môi trường mạng để cho các service trong cluster cũng như load balancer được hoạt động. Dưới đây là kết quả sau khi tạo VPC và nơi các ECS được hoạt động. Nội dung Khởi tạo cluster Phân bổ tài nguyên cho ứng dụng Scaling Workload "
+	"content": "\rChúng ta sẽ khởi tạo 1 VPC với 2 public subnets, 2 private subnets, 1 internet gateway, default route cho các public subnets. 2 NAT gateway cho các private subnets. NAT gateway sẽ tốn phí nên cần xóa khi không sử dụng nữa.\nĐể tìm hiểu cách tạo VPC với public/private subnet các bạn có thể tham khảo bài lab :\nLàm việc với Amazon VPC Ở phần này chúng ta sẽ khởi tạo môi trường mạng để cho các service trong cluster cũng như load balancer được hoạt động. Dưới đây là kết quả sau khi tạo VPC và nơi các ECS được hoạt động. Nội dung Khởi tạo cluster Deploy ứng dụng Phân bổ tài nguyên cho ứng dụng Scaling Workload "
 },
 {
 	"uri": "/1-introduce/1.3-kubernetes-basic/",
 	"title": "Kubernetes cơ bản",
 	"tags": [],
 	"description": "",
-	"content": "Amazon Elastic Container Service (ECS) Amazon Elastic Container Service (Amazon ECS), theo định nghĩa của AWS là một dịch vụ quản lý container có khả năng mở rộng cao, dễ dàng run, stop, hay quản lý docker container ở trong một cluster. Bạn có thể host một serverless infrastructure bằng cách chạy service hay task sử dụng Fargate launch type hoặc sử dụng EC2 launch type để chạy các EC2 instance. ECS chạy các container trong cluster dựa trên các EC2 được cài sẵn Docker. Bạn có thể dễ dàng quản lý các container của mình thông qua Cluster. ECS là một dịch vụ chạy theo region, và nó hoạt động trong VPC. Sau khi một cluster được khởi tạo và chạy, bạn có thể định nghĩa các task và services mà nó chỉ định Docker container image sẽ chạy thông qua clusters. ECS có hai dạng được triển khai là chạy trên các EC2 và serverless(fargate).\nCác thành phần khác Task definition Task definition là một bản thiết kế cho ứng dụng của bạn. Nó sẽ định nghĩa image nào được chạy trong container, giới hạn sử dụng CPU và bộ nhớ cho mỗi container được chạy. Lựa chọn các mode networking của Docker có trên AWS ECS và port.\nTask Mỗi một Task tương ứng với mỗi bản Task definition được chạy trên cluster. Nhiều task có thể được chạy bởi cùng một Task definition. Với mỗi một task sử dụng Fargate launch type có một ranh giới riêng biệt và không chia sẻ kernel, tài nguyên cpu, bộ nhớ, hay elastic network interface với task khác.\nService Xác định mức tối thiểu và tối đa của một hoặc nhiều Task từ một Task Definition chạy tại bất kỳ thời điểm nhất định nào. Đây là tính năng scale và cân bằng tải. Service còn quy định việc các task được chạy ở đâu ở các subnets.\n"
+	"content": "Nội dung Trong phần này chúng ta sẽ tìm hiểu 2 thứ cơ bản của Kubernetes là:\nKiến trúc cơ bản của Kubernetes Các đối tượng cơ bản trong Kubernetes "
 },
 {
-	"uri": "/3-eks-fargate/3.3-scaling-workload/",
+	"uri": "/3-eks-fargate/3.3-resource-allocation/",
+	"title": "Phân bổ tài nguyên cho ứng dụng",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/3-eks-fargate/3.4-scaling-workload/",
 	"title": "Scaling workload",
 	"tags": [],
 	"description": "",

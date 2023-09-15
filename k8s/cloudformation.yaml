@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create an AWS Cloud9 Environment with Full EKS Permissions
+
+Resources:
+  MyCloud9Environment:
+    Type: AWS::Cloud9::EnvironmentEC2
+    Properties:
+      Name: MyCloud9Environment
+      Description: My Cloud9 Environment
+      InstanceType: t2.micro
+
+  MyCloud9InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - Ref: MyCloud9Role
+
+  MyCloud9Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: EKSPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "*"
+                Resource: "*"
+Outputs:
+  Cloud9EnvironmentURL:
+    Description: URL for the AWS Cloud9 Environment
+    Value: !Sub 'https://${AWS::Region}.console.aws.amazon.com/cloud9/ide/${MyCloud9Environment}?region=${AWS::Region}'
+
+  Cloud9EnvironmentInstanceProfile:
+    Description: IAM instance profile attached to the Cloud9 environment
+    Value: !Ref MyCloud9InstanceProfile
