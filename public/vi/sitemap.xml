@@ -8,6 +8,8 @@
   </url><url>
     <loc>/3-eks-fargate/3.1-create-cluster/</loc>
   </url><url>
+    <loc>/3-eks-fargate/3.1-create-cluster/3.1.1-create-cluster/</loc>
+  </url><url>
     <loc>/1-introduce/1.3-kubernetes-basic/1.3.1-architecture-basics/</loc>
   </url><url>
     <loc>/</loc>
@@ -22,9 +24,15 @@
                 href="/"
                 />
   </url><url>
+    <loc>/2-prerequiste/2.1-create-cloud9-ide/</loc>
+  </url><url>
     <loc>/1-introduce/1.2-amazon-fargate/</loc>
   </url><url>
+    <loc>/2-prerequiste/2.2-attach-iam-role/</loc>
+  </url><url>
     <loc>/1-introduce/1.3-kubernetes-basic/1.3.2-fundamental-components/</loc>
+  </url><url>
+    <loc>/3-eks-fargate/3.1-create-cluster/3.1.2-install-aws-load-balancer-controller/</loc>
   </url><url>
     <loc>/2-prerequiste/</loc>
   </url><url>
@@ -36,9 +44,9 @@
   </url><url>
     <loc>/3-eks-fargate/3.3-resource-allocation/</loc>
   </url><url>
-    <loc>/3-eks-fargate/3.4-scaling-workload/</loc>
-  </url><url>
     <loc>/4-cleanup-resources/</loc>
+  </url><url>
+    <loc>/3-eks-fargate/3.4-scaling-workload/</loc>
   </url><url>
     <loc>/categories/</loc>
     <xhtml:link
