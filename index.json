@@ -39,7 +39,7 @@
 	"title": "Start EKS with fargate mode",
 	"tags": [],
 	"description": "",
-	"content": "Bắt đầu với EKS và Fargate mode Tổng quan Trong bài lab này, bạn sẽ tìm hiểu các khái niệm cơ bản và thực hành về ECS - ECR. Thực hành tạo các services chạy task trong các private subnets và gắn load balancing cho ECS.\nNội dung Giới thiệu Các bước chuẩn bị EKS với Fargate Dọn dẹp tài nguyên Fargate không nằm trong free tier của AWS. Bạn sẽ phải trả phí cho các tài nguyên sử dụng trong bài lab này. Bạn có thể tìm hiểu thêm về giá cả của Fargate tại đây.\n"
+	"content": "Bắt đầu với EKS và Fargate mode Tổng quan Trong bài lab này, bạn sẽ tìm hiểu các khái niệm cơ bản và thực hành về EKS trên Fargate. Chạy các Pod trên cluster và exposing service ra bên ngoài bằng AWS Load Balancer.\nNội dung Giới thiệu Các bước chuẩn bị EKS với Fargate Dọn dẹp tài nguyên Fargate không nằm trong free tier của AWS. Bạn sẽ phải trả phí cho các tài nguyên sử dụng trong bài lab này. Bạn có thể tìm hiểu thêm về giá cả của Fargate tại đây.\n"
 },
 {
 	"uri": "/2-prerequiste/2.1-create-cloud9-ide/",
